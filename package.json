@@ -1,6 +1,25 @@
 {
   "dependencies": {
     "express": "^4.17.3",
+    "moment": "^2.29.1",
     "mongoose": "^6.2.7"
-  }
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "social-net",
+  "version": "1.0.0",
+  "description": "Social-Network backend",
+  "main": "server.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BurnsD/sturdy-guacamole.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BurnsD/sturdy-guacamole/issues"
+  },
+  "homepage": "https://github.com/BurnsD/sturdy-guacamole#readme"
 }
