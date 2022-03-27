@@ -1,4 +1,3 @@
-const { createSecureServer } = require('http2');
 const { Thought, User } = require('../models')
 
 const userController = {
@@ -27,7 +26,7 @@ const userController = {
             });
     },
     // Create User
-    createSecureServer({ body }, res) {
+    createUser({ body }, res) {
         User.create(body)
             .then(dbUserData => res.json(dbUserData))
             .catch(err => res.json(err));
@@ -49,6 +48,38 @@ const userController = {
         User.findOneAndDelete({ _id: params.id })
             .then(dbUserData => res.json(dbUserData))
             .catch(err => res.json(err));
+    },
+    // Add Friend to User
+    addFriend({ params }, res) {
+        User.findOneAndUpdate(
+            { _id: params.userId },
+            { $push: { friends: params.friendId } },
+            { new: true }
+        )
+            .then((dbUserData) => {
+                if (!dbUserData) {
+                    res.status(404).json({ message: 'This User could not be found' });
+                    return;
+                }
+                res.json(dbUserData);
+            })
+            .catch((err) => res.status(400).json(err));
+    },
+    // Delete a friend from User
+    deleteFriend({ params }, res) {
+        User.findOneAndUpdate(
+            { _id: params.userId },
+            { $pull: { friends: params.friendId } },
+            { new: true }
+        )
+            .then((dbUserData) => {
+                if (!dbUserData) {
+                    res.status(404).json({ message: 'This User could not be found' });
+                    return;
+                }
+                res.json(dbUserData);
+            })
+            .catch((err) => res.status(400).json(err));
     }
 };
 

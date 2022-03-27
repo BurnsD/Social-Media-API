@@ -2,6 +2,27 @@ const { User, Thought } = require('../models');
 const { populate } = require('../models/User');
 
 const thoughtController = {
+    // Create
+    createThought(req, res) {
+        Thought.create(req.body)
+        .then(({ _id }) => {
+            return User.findOneAndUpdate(
+              { _id: params.pizzaId },
+              { $push: { comments: _id } },
+              { new: true }
+            );
+          })
+          .then(dbUserData => {
+            console.log(dbUserData);
+            if (!dbUserData) {
+              res.status(404).json({ message: 'This User could not be found' });
+              return;
+            }
+            res.json(dbUserData);
+          })
+          .catch(err => res.json(err));
+      },
+
     // Get all
     getAllThought(req, res) {
         Thought.find({})
@@ -32,11 +53,11 @@ const thoughtController = {
             });
     },
     // Create Thought
-    createThought({ body }, res) {
-        Thought.create(body)
-            .then(dbThoughtData => res.json(dbThoughtData))
-            .catch(err => res.json(err));
-    },
+    // createThought({ body }, res) {
+    //     Thought.create(body)
+    //         .then(dbThoughtData => res.json(dbThoughtData))
+    //         .catch(err => res.json(err));
+    // },
     //Update by ID
     updateThought({ params, body }, res) {
         Thought.findOneAndUpdate({ _id: params.id }, body, { new: true, runValidators: true })
