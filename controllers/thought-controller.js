@@ -7,8 +7,8 @@ const thoughtController = {
         Thought.create(req.body)
             .then(({ _id }) => {
                 return User.findOneAndUpdate(
-                    { _id: params.pizzaId },
-                    { $push: { comments: _id } },
+                    { _id: params.userId },
+                    { $push: { thoughts: _id } },
                     { new: true }
                 );
             })
