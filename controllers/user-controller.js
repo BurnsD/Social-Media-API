@@ -3,12 +3,14 @@ const { User } = require('../models')
 const userController = {
     // Get all Users
     getAllUser(req, res) {
+        console.log('here')
         User.find({})
             .select('-__v')
             .sort({ _id: -1 })
             .then(dbUserData => res.json(dbUserData))
             .catch(err => {
                 console.log(err);
+                res.sendStatus(400);
             });
     },
     // Get 1 User by ID
@@ -22,7 +24,7 @@ const userController = {
             .then(dbUserData => res.json(dbUserData))
             .catch(err => {
                 console.log(err);
-                res.sendStatus(400);
+                res.sendStatus(400).json(err);
             });
     },
     // Create User
