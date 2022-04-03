@@ -20,12 +20,12 @@ router
 router
     .route('/:id')
     .get(getThoughtById)
-    .post(updateThought)
+    .put(updateThought)
     .delete(deleteThought);
 
 // POST
 router
-    .route('/:thoughtId//reacitons')
+    .route('/:thoughtId/reactions')
     .post(createReaction);
 
 router

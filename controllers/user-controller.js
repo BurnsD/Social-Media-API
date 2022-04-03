@@ -20,11 +20,20 @@ const userController = {
                 path: 'thoughts',
                 select: '-__v'
             })
-            .select('__v')
-            .then(dbUserData => res.json(dbUserData))
+            .populate({
+                path: 'friends',
+                select: '-__v'
+            })
+            .then(dbUserData => {
+                if (!dbUserData) {
+                    res.status(404).json({ message: 'This User does not exist' });
+                    return;
+                }
+                res.json(dbUserData);
+            })
             .catch(err => {
                 console.log(err);
-                res.sendStatus(400).json(err);
+                res.sendStatus(400);
             });
     },
     // Create User
